@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vikas R | Personal Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #112240;
+    --accent: #c9a84c;
+    --accent-light: #e8c97a;
+    --text-light: #ccd6f6;
+    --text-muted: #8892b0;
+    --white: #ffffff;
+    --card-bg: #112240;
+    --border: rgba(201,168,76,0.25);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 5%;
+    background: rgba(10,22,40,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--accent); letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 7rem 5% 4rem; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 70% 50%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr auto; gap: 4rem;
+    align-items: center; max-width: 1100px; width: 100%; margin: 0 auto;
+  }
+  .hero-tag { display: inline-block; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 1.2rem; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 700; line-height: 1.1; color: var(--white); margin-bottom: 1rem; }
+  .hero h1 span { color: var(--accent); }
+  .hero-subtitle { font-size: 1.15rem; color: var(--text-muted); max-width: 480px; margin-bottom: 2.5rem; font-weight: 300; line-height: 1.8; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: var(--navy); padding: 0.8rem 2rem; border-radius: 4px; font-weight: 600; font-size: 0.9rem; text-decoration: none; letter-spacing: 0.5px; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); }
+  .btn-outline { border: 1px solid var(--accent); color: var(--accent); padding: 0.8rem 2rem; border-radius: 4px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .btn-outline:hover { background: rgba(201,168,76,0.1); transform: translateY(-2px); }
+
+  .avatar-wrap {
+    width: 220px; height: 220px; border-radius: 50%;
+    border: 3px solid var(--accent); background: var(--card-bg);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--accent);
+    flex-shrink: 0; position: relative;
+  }
+  .avatar-wrap::after { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.2); }
+
+  section { padding: 6rem 5%; max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 0.78rem; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.6rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: var(--white); margin-bottom: 1rem; line-height: 1.25; }
+  .divider { width: 60px; height: 2px; background: var(--accent); margin-bottom: 3rem; }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text p { color: var(--text-muted); margin-bottom: 1.2rem; font-size: 1rem; line-height: 1.85; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--accent); font-weight: 700; }
+  .stat-label { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 0.3rem; }
+
+  #skills { padding: 6rem 5%; }
+  .skills-inner { max-width: 1100px; margin: 0 auto; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .skill-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 1.8rem; transition: transform 0.2s, border-color 0.2s; }
+  .skill-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+  .skill-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .skill-card h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 0.8rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag { background: rgba(201,168,76,0.12); color: var(--accent-light); font-size: 0.78rem; padding: 3px 10px; border-radius: 20px; border: 1px solid rgba(201,168,76,0.2); font-weight: 500; }
+
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+  .timeline-item { position: relative; margin-bottom: 2.5rem; }
+  .timeline-item::before { content: ''; position: absolute; left: -2.45rem; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--navy); }
+  .timeline-date { font-size: 0.8rem; color: var(--accent); font-weight: 600; letter-spacing: 1px; margin-bottom: 0.3rem; }
+  .timeline-title { font-size: 1.05rem; font-weight: 600; color: var(--white); margin-bottom: 0.2rem; }
+  .timeline-sub { font-size: 0.9rem; color: var(--text-muted); }
+
+  #contact { padding: 6rem 5%; }
+  .contact-inner { max-width: 1100px; margin: 0 auto; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-info p { color: var(--text-muted); margin-bottom: 2rem; line-height: 1.8; }
+  .contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+  .contact-icon { width: 44px; height: 44px; background: rgba(201,168,76,0.1); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+  .contact-detail { font-size: 0.9rem; color: var(--text-muted); }
+  .contact-detail strong { color: var(--text-light); display: block; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.82rem; color: var(--text-muted); letter-spacing: 0.5px; }
+  .form-group input, .form-group textarea { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 0.8rem 1rem; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; transition: border-color 0.2s; resize: vertical; }
+  .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); }
+  .form-group textarea { min-height: 130px; }
+
+  footer { text-align: center; padding: 2rem 5%; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem; }
+  footer span { color: var(--accent); }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    .hero-grid { grid-template-columns: 1fr; text-align: center; }
+    .avatar-wrap { margin: 0 auto; }
+    .hero-btns { justify-content: center; }
+    .hero-subtitle { margin: 0 auto 2.5rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">VR</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-grid">
+    <div>
+      <span class="hero-tag">AI & ML Engineer</span>
+      <h1>Hi, I'm <span>Vikas R</span></h1>
+      <p class="hero-subtitle">A passionate 3rd year AI & ML student with a strong foundation in programming, data structures, and modern technologies — eager to build intelligent solutions and grow in the tech industry.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Get In Touch</a>
+        <a href="#skills" class="btn-outline">View Skills</a>
+      </div>
+    </div>
+    <div class="avatar-wrap">VR</div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="section-label">Who I Am</div>
+  <h2 class="section-title">About Me</h2>
+  <div class="divider"></div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>I am <strong>Vikas R</strong>, a 3rd year undergraduate student specializing in <strong>Artificial Intelligence & Machine Learning</strong>, based in Nagarbhavi, Bangalore. I am set to graduate in <strong>2028</strong>.</p>
+      <p>My academic journey has given me a solid grounding in core computer science subjects — from operating systems and databases to modern AI and LLM technologies. I enjoy building practical projects and constantly pushing the boundaries of what I can learn.</p>
+      <p>Currently enhancing my digital skills through the <strong>InAmigos Foundation</strong> program, where I am learning to leverage AI tools for real-world applications.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num">3rd</div>
+        <div class="stat-label">Year of Study</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2028</div>
+        <div class="stat-label">Graduation Year</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">AI/ML</div>
+        <div class="stat-label">Specialization</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">Open</div>
+        <div class="stat-label">to Internships</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="skills" style="background: rgba(17,34,64,0.4); border-top: 1px solid rgba(201,168,76,0.1); border-bottom: 1px solid rgba(201,168,76,0.1);">
+  <div class="skills-inner" style="padding: 6rem 0;">
+    <div class="section-label">What I Know</div>
+    <h2 class="section-title">Skills</h2>
+    <div class="divider"></div>
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <div class="skill-icon">💻</div>
+        <h3>Programming Languages</h3>
+        <div class="skill-tags">
+          <span class="tag">Java</span>
+          <span class="tag">Python</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🧠</div>
+        <h3>Core CS Subjects</h3>
+        <div class="skill-tags">
+          <span class="tag">DSA</span>
+          <span class="tag">Operating Systems</span>
+          <span class="tag">DBMS</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🗄️</div>
+        <h3>Databases</h3>
+        <div class="skill-tags">
+          <span class="tag">SQL</span>
+          <span class="tag">MongoDB</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🤖</div>
+        <h3>AI & Modern Tech</h3>
+        <div class="skill-tags">
+          <span class="tag">LLM</span>
+          <span class="tag">AI Tools</span>
+          <span class="tag">Machine Learning</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🤝</div>
+        <h3>Soft Skills</h3>
+        <div class="skill-tags">
+          <span class="tag">Communication</span>
+          <span class="tag">Teamwork</span>
+          <span class="tag">Problem Solving</span>
+          <span class="tag">Adaptability</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="education">
+  <div class="section-label">My Journey</div>
+  <h2 class="section-title">Education</h2>
+  <div class="divider"></div>
+  <div class="timeline reveal">
+    <div class="timeline-item">
+      <div class="timeline-date">2022 – 2028 (Expected)</div>
+      <div class="timeline-title">B.E. / B.Tech — Artificial Intelligence & Machine Learning</div>
+      <div class="timeline-sub">University / College Name — Bangalore, Karnataka</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2022 – 2024 (Passed Out)</div>
+      <div class="timeline-title">Pre-University Course (PUC) — 12th Standard</div>
+      <div class="timeline-sub">PU College Name — Karnataka</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2025 – Present</div>
+      <div class="timeline-title">Digital Skills & AI Tools Program</div>
+      <div class="timeline-sub">InAmigos Foundation</div>
+    </div>
+  </div>
+</section>
+
+<div id="contact" style="background: rgba(17,34,64,0.4); border-top: 1px solid rgba(201,168,76,0.1);">
+  <div class="contact-inner" style="padding: 6rem 0;">
+    <div class="section-label">Say Hello</div>
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="divider"></div>
+    <div class="contact-grid reveal">
+      <div class="contact-info">
+        <p>I'm open to internships, collaborative projects, and learning opportunities. Feel free to reach out — I'd love to connect!</p>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div class="contact-detail">
+            <strong>Email</strong>
+            vr8833355@gmail.com
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-detail">
+            <strong>Location</strong>
+            Nagarbhavi, Bangalore, Karnataka
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div class="contact-detail">
+            <strong>Phone</strong>
+            +91 98448 35558
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">💼</div>
+          <div class="contact-detail">
+            <strong>LinkedIn</strong>
+            linkedin.com/in/vikasr
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="contact-form">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="john@example.com">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Write your message here..."></textarea>
+          </div>
+          <a href="mailto:vr8833355@gmail.com" class="btn-primary" style="text-align:center;">Send Message</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Designed & built by <span>Vikas R</span> using AI tools &nbsp;·&nbsp; Nagarbhavi, Bangalore &nbsp;·&nbsp; 2025</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
